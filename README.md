@@ -1,1 +1,1 @@
-# wander
+# Wander - Event Tracking at Universities
