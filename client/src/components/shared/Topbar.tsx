@@ -22,8 +22,8 @@ function Topbar() {
                                 <Image
                                     src="/assets/logout.svg"
                                     alt="logout"
-                                    width={24}
-                                    height={24}
+                                    width={17}
+                                    height={17}
                                 />
                             </div>
                         </SignOutButton>
