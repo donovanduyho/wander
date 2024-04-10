@@ -9,5 +9,6 @@ router.use("/superadmin", require('./super_admins_router'));
 router.use("/admins", require("./admins_routes"))
 router.use("/events", require('./events_route'))
 router.use("/user", require('./login_router'))
+router.use('/test', require('./test_router'));
 
 module.exports = router;
