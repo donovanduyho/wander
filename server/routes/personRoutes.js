@@ -1,9 +1,16 @@
 
 const express = require('express');
+const { hashPassword } = require('../controllers/encrypt');
 const router = express.Router();
 
 
-const { findPersonByPid, findPersonByUsername, findPersonByEmail, addPerson, deletePerson } = require('../models/Person');
+const { findPersonByPid, 
+    findPersonByUsername, 
+    findPersonByEmail, 
+    addPerson, 
+    deletePerson,
+    updatePerson
+} = require('../models/Person');
 
 router.get("/getByPid", (req, res) => {
     const {
