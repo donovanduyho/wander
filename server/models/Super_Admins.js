@@ -4,12 +4,13 @@ const {
     findPersonByUsername,
     findPersonByEmail,
     addPerson,
-    deletePerson
+    deletePerson,
+    findPersonByUsernameAccess
 } = require("../models/Person");
 
 async function findSABySpid(spid) {
     return database.query("SELECT p.pid spid, access, username, first_name, last_name, email, phone FROM Super_Admins sa INNER JOIN Person p ON sa.pid = p.pid WHERE sa.spid = ?", [spid])
-    .then(([row]) => row[0])
+    .then(([data]) => data[0])
     .catch((err) => {
         console.log(err);
         throw err;
@@ -17,7 +18,7 @@ async function findSABySpid(spid) {
 }
 
 async function findSAByUsername(username) {
-    const person = await findPersonByUsername(username);
+    const person = await findPersonByUsernameAccess(username, 'super admin');
 
     if (!person) {
         return null;

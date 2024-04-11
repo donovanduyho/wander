@@ -26,7 +26,7 @@ router.post('/addUni', (req, res) => {
     } = req.body;
 
     findUniByName(name).then((uni) => {
-        if (uni > 0)
+        if (uni)
             return res.status(404).json({ message: "University page already registered"})
         else {
             const university = {

@@ -9,7 +9,7 @@ const {
 
 async function findUniByUid(uid) {
     return database.query("SELECT * FROM Universities u INNER JOIN Event_Location l ON u.location = l.lname WHERE uid = ?", [uid])
-    .then(([rows]) => rows[0])
+    .then(([data]) => {data[0];console.log(data)})
     .catch(err => {
         console.log('university file', err);
         throw err;
@@ -18,7 +18,7 @@ async function findUniByUid(uid) {
 
 async function findUniNameList() {
     return database.query("SELECT name FROM Universities")
-    .then(([rows]) => rows.map(uni => uni.name))
+    .then(([data]) => data.map(uni => uni.name))
     .catch(err => {
         console.log(err);
         throw err;
@@ -27,7 +27,7 @@ async function findUniNameList() {
 
 async function findUniBySpid(spid) {
     return database.query("SELECT * FROM Universities WHERE spid = ?", [spid])
-    .then(([rows]) => rows)
+    .then(([data]) => data)
     .catch(err => {
         console.log(err);
         throw err;
@@ -55,9 +55,9 @@ async function addUni(university) {
     } = university;
     // this is where everything is getting fucked
     
-    await findLocationByLname(lname).then(async result => {
-        console.log(result);
-        if (result == undefined) {
+    await findLocationByLname(lname).then(async data => {
+        console.log(data);
+        if (data == undefined) {
             await addLocation(lname, address);
         }
     });

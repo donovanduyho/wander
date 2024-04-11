@@ -27,6 +27,14 @@ const {
 } = require('../models/Public_Events');
 
 
+const { 
+    findRSOByRid,
+    findRSOByName,
+    addRSO,
+    findRSOByAid
+ } = require('../models/RSO');
+
+
 // create event
 router.post('/create', (req, res) => {
     const { pid, aid, uid } = req.body
@@ -61,6 +69,15 @@ router.post('/create', (req, res) => {
             return addPublicEvent({ eid, aid });
         if (type === 'Private')
             return addPrivateEvent({ eid, aid, uid })
+        if (type === 'RSO') {
+            const rid = findRSOByAid(aid)
+            .then((data) => data.rid)
+            .catch((err) => {
+                console.log(err);
+                throw err;
+            })
+            return addRSOEvent({ eid, rid })
+        }
     })
     .then(() => {
         res.status(200).send();
