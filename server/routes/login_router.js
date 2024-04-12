@@ -47,6 +47,8 @@ router.post('/login', async(req,res) => {
 
     const match = await comparePassword(password, user.password)
 
+    console.log("user info (login function)")
+    console.log(user)
     if (match) {
 
         const jwtInfo = {
@@ -68,6 +70,7 @@ router.post('/login', async(req,res) => {
                 console.log(err);
             }
             res.status(200).json({
+                uid: user.uid,
                 token: 'Bearer ' + token
             })
         })
@@ -183,7 +186,7 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
         access
     } = req.user;
 
-
+    console.log(req.user);
 
     res.json({
         pid,
