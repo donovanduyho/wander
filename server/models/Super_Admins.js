@@ -45,7 +45,8 @@ async function addSA(superAdmin) {
         first_name,
         last_name,
         phone,
-        email
+        email,
+        uid
     } = superAdmin;
 
     const pid = await addPerson({
@@ -58,7 +59,7 @@ async function addSA(superAdmin) {
         access: 'super_admin'
     });
 
-    database.query("INSERT INTO Super_Admins (pid) VALUES (?)", [pid])
+    database.query("INSERT INTO Super_Admins (pid, uid) VALUES (?, ?)", [pid, uid])
     .catch((err) => console.log(err));
 }
 
