@@ -9,6 +9,7 @@ async function Page() {
 
     const userData = {
         id: user.id,
+        username: userInfo ? userInfo?.username : "",
         name: userInfo ? userInfo?.name : "",
         university: userInfo ? userInfo?.university : "",
     };
