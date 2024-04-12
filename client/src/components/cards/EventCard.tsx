@@ -3,9 +3,6 @@ import axios from "axios";
 
 interface Props {
     eid: number;
-}
-
-interface Details {
     name: string;
     event_location: string;
     time: string;
@@ -13,8 +10,15 @@ interface Details {
     description: string;
 }
 
-const EventCard = ({ eid }: Props) => {
-    const [event, setEvent] = useState<Details | null>(null);
+const EventCard = ({
+    eid,
+    name,
+    event_location,
+    time,
+    category,
+    description,
+}: Props) => {
+    const [event, setEvent] = useState<Props | null>(null);
 
     useEffect(() => {
         const fetchEvent = async () => {

@@ -41,8 +41,7 @@ export default function Home() {
             <h1 className="text-left text-white font-bold">Home</h1>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {events.map((event) => (
-                    <EventCard
-                        key={event.eid} // Ensure each event has a unique key
+                    <EventCard // Ensure each event has a unique key
                         eid={event.eid}
                         name={event.name}
                         event_location={event.event_location}
