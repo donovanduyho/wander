@@ -40,8 +40,8 @@ export default function Page() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
             university: "",
+            username: "",
             email: "",
             password: "",
             passwordConfirm: "",
@@ -52,14 +52,14 @@ export default function Page() {
 
     const handleSubmit = async (values: z.infer<typeof formSchema>) => {
         axios
-            .post("http://localhost:8000/user/registerSA", {
+            .post("http://localhost:8000/user/registerStudent", {
                 username: values.username,
                 password: values.password,
                 first_name: values.first_name,
                 last_name: values.last_name,
                 phone: values.phone,
                 email: values.email,
-                University: values.university,
+                university: values.university,
             })
             .then((response) => {
                 console.log(response);

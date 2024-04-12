@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
     .object({
@@ -32,6 +33,8 @@ const formSchema = z
     );
 
 export default function Page() {
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -42,6 +45,18 @@ export default function Page() {
     });
 
     const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+        axios
+            .post("http://localhost:8000/user/login", {
+                username: values.username,
+                password: values.password,
+            })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
         console.log({ values });
     };
 
@@ -112,7 +127,11 @@ export default function Page() {
                             );
                         }}
                     />
-                    <Button type="submit" className="w-full">
+                    <Button
+                        type="submit"
+                        onClick={() => router.push("/")}
+                        className="w-full"
+                    >
                         Create Account
                     </Button>
                 </form>
