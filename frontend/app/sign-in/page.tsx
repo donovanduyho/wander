@@ -15,8 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
+import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 
-const formSchema = z
+const FormSchema = z
     .object({
         username: z.string().min(3).max(30),
         password: z.string().min(3),
@@ -34,9 +36,11 @@ const formSchema = z
 
 export default function Page() {
     const router = useRouter();
+    const signIn = useSignIn();
+    const isAuthenticated = useIsAuthenticated();
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
         defaultValues: {
             username: "",
             password: "",
@@ -44,20 +48,38 @@ export default function Page() {
         },
     });
 
-    const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-        axios
-            .post("http://localhost:8000/user/login", {
-                username: values.username,
-                password: values.password,
-            })
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:8000/user/login",
+                {
+                    username: values.username,
+                    password: values.password,
+                }
+            );
 
-        console.log({ values });
+            if (
+                signIn({
+                    auth: {
+                        token: response.data.token,
+                        type: "Bearer",
+                    },
+                    userState: {
+                        username: values.username,
+                    },
+                })
+            ) {
+                console.log("Success");
+                router.push("/");
+            } else {
+                console.log("Fail");
+            }
+            console.log("Authenticated?:", isAuthenticated);
+        } catch (error) {
+            console.log(error);
+        }
+
+        // console.log({ values });
     };
 
     return (
@@ -129,7 +151,7 @@ export default function Page() {
                     />
                     <Button
                         type="submit"
-                        onClick={() => router.push("/")}
+                        //onClick={() => router.push("/")}
                         className="w-full"
                     >
                         Login
