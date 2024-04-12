@@ -31,8 +31,12 @@ const {
     findRSOByRid,
     findRSOByName,
     addRSO,
-    findRSOByAid
+    findRSOByAid,
  } = require('../models/RSO');
+
+ const {
+    findAllRSOEvents
+ } = require('../models/RSO_Events')
 
 
 // create event
