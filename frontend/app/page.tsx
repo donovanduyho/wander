@@ -19,12 +19,11 @@ export default function Home() {
     useEffect(() => {
         const getAllEvents = async () => {
             try {
-                const response = await axios.get(
+                const response = await axios.post(
                     "http://localhost:8000/events/allEvents",
                     {
-                        data: { uid: 1 },
-                    }
-                );
+                        uid: 1, rid: 1 
+                    });
                 setEvents(response.data);
                 console.log(response.data);
             } catch (error) {

@@ -129,7 +129,7 @@ router.post('/registerSA', async (req, res) => {
 
     let uid = await findUniByName(university)
     .then((result) => result.uid)
-    .catch((err) => res.status(400).json({ message: "Error finding university"}))
+    .catch(() => res.status(400).json({ message: "Error finding university"}))
 
     let hashedPassword = await hashPassword(password);
     
@@ -142,7 +142,6 @@ router.post('/registerSA', async (req, res) => {
                 if (result)
                     return res.status(404).json({message: "Email already exists"})
                 else {
-
                     const superAdmin = {
                         username,
                         password: hashedPassword,
