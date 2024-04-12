@@ -3,9 +3,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { Calendar as CalendarIcon } from "lucide-react";
 import {
     Form,
     FormField,
@@ -18,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const formSchema = z.object({
+const FormSchema = z.object({
     name: z.string().min(3).max(30),
     description: z.string(),
     type: z.string(),
@@ -31,8 +28,8 @@ const formSchema = z.object({
 });
 
 export default function CreateEvent() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
         defaultValues: {
             name: "",
             description: "",
@@ -46,7 +43,7 @@ export default function CreateEvent() {
         },
     });
 
-    const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
         //TODO: Call create event api endpoint
         console.log({ values });
     };
