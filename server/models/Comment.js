@@ -1,4 +1,3 @@
-const { query } = require('../database');
 const database = require('../database');
 
 async function findCommentByCid(cid) {
@@ -41,12 +40,17 @@ async function deleteComment(comment) {
 
 async function listComments(eid) {
     database.query("SELECT * FROM Comment WHERE eid = ?")
-    .then(([data]) => data)
+    .then(([data]) => data.map(row => ({...row})))
+    .catch((err) => {
+        console.log(err);
+        throw err;
+    })
 }
 
 
 module.exports = {
     findCommentByCid,
     addComment,
-    deleteComment
+    deleteComment,
+    listComments
 }

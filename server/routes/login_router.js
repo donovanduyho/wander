@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const router = express.Router();
+const database = require('../database')
 
 
 const {
@@ -27,7 +28,8 @@ const {
 const {
     hashPassword,
     comparePassword,
-} = require('../controllers/encrypt')
+} = require('../controllers/encrypt');
+const { findUniByName } = require('../models/Universities');
 
 
 router.post('/login', async(req,res) => {
@@ -36,9 +38,9 @@ router.post('/login', async(req,res) => {
     let user = await findStudentByUsername(username);
 
     if (!user)
+    {
         user = await findSAByUsername(username);
-    
-    
+    }
     if (!user)
         return res.status(400).json({ message: "No user found"});
 
@@ -48,10 +50,13 @@ router.post('/login', async(req,res) => {
         const jwtInfo = {
             pid : user.pid,
             spid: user.spid,
+            uid: user.uid,
             first_name: user.first_name,
             last_name: user.last_name,
             access: user.access
         };
+
+        console.log(jwtInfo);
         
         jwt.sign(jwtInfo, process.env.TOKEN_SECRET, { expiresIn: 3600 }, (err, token) => {
             if (err) {
@@ -118,8 +123,13 @@ router.post('/registerSA', async (req, res) => {
         first_name,
         last_name,
         phone,
-        email
+        email,
+        university
     } = req.body
+
+    let uid = await findUniByName(university)
+    .then((result) => result.uid)
+    .catch((err) => res.status(400).json({ message: "Error finding university"}))
 
     let hashedPassword = await hashPassword(password);
     
@@ -132,6 +142,7 @@ router.post('/registerSA', async (req, res) => {
                 if (result)
                     return res.status(404).json({message: "Email already exists"})
                 else {
+
                     const superAdmin = {
                         username,
                         password: hashedPassword,
@@ -139,7 +150,8 @@ router.post('/registerSA', async (req, res) => {
                         last_name,
                         phone,
                         email,
-                        access: "super admin"
+                        access: "super admin",
+                        uid
                     };
                     addSA(superAdmin)
                     .then(() => res.status(200).json({message: "New SA successfully created"}))

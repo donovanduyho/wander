@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const path = require("path");
 const router = express.Router();
+const multer = require("multer");
 
 const app = express();
 const dotenv = require("dotenv");

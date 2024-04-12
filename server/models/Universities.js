@@ -56,7 +56,6 @@ async function addUni(university) {
     // this is where everything is getting fucked
     
     await findLocationByLname(lname).then(async data => {
-        console.log(data);
         if (data == undefined) {
             await addLocation(lname, address);
         }

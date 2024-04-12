@@ -12,8 +12,9 @@ async function findLocationByLid(lid) {
 async function findLocationByLname(lname) {
     return database.query("SELECT * FROM Event_Location WHERE lname = ?", [lname])
     .then(([data]) => data[0])
-    .catch(err => {console.log(err);
-    throw err;
+    .catch(err => {
+        console.log(err);
+        throw err;
     })
 }
 
