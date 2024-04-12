@@ -3,10 +3,14 @@
 import { sidebarLinks } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 function LeftSidebar() {
     const pathname = usePathname();
+    const router = useRouter();
+    const signOut = useSignOut();
 
     return (
         <section className="custom-scrollbar sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto bg-neutral-900 border-transparent border-r pb-5 pt-28 max-md:hidden">
@@ -38,6 +42,15 @@ function LeftSidebar() {
                         </Link>
                     );
                 })}
+                <Button
+                    onClick={() => {
+                        signOut();
+                        router.push("/sign-in");
+                    }}
+                    className="bg-white text-black rounded-lg"
+                >
+                    Sign Out
+                </Button>
             </div>
         </section>
     );
