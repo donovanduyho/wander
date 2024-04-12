@@ -31,7 +31,8 @@ async function findSAByUsername(username) {
         console.log(err);
         throw err;
     })
-
+    console.log("Super Admin Return: ")
+    console.log({ ...person, ...superadmin});
     return {
         ...person,
         ...superadmin

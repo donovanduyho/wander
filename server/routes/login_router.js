@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken')
 const router = express.Router();
 const database = require('../database')
+const passport = require('passport')
 
 
 const {
@@ -47,15 +48,18 @@ router.post('/login', async(req,res) => {
     const match = await comparePassword(password, user.password)
 
     if (match) {
+
         const jwtInfo = {
             pid : user.pid,
             spid: user.spid,
             uid: user.uid,
+            username: user.username,
             first_name: user.first_name,
             last_name: user.last_name,
             access: user.access
         };
 
+        console.log("jwt info: " + jwtInfo);
         console.log(jwtInfo);
         
         jwt.sign(jwtInfo, process.env.TOKEN_SECRET, { expiresIn: 3600 }, (err, token) => {
@@ -164,6 +168,33 @@ router.post('/registerSA', async (req, res) => {
     })
 })
 
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log("user information:");
+    console.log(req.user);
+    
+    const {
+        pid,
+        uid,
+        spid,
+        username,
+        first_name,
+        last_name,
+        aid,
+        access
+    } = req.user;
 
+
+
+    res.json({
+        pid,
+        aid,
+        spid,
+        uid,
+        first_name,
+        last_name,
+        username,
+        access
+    });
+})
 
 module.exports = router;
