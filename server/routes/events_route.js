@@ -27,6 +27,14 @@ const {
 } = require('../models/Public_Events');
 
 
+const { 
+    findRSOByRid,
+    findRSOByName,
+    addRSO,
+    findRSOByAid
+ } = require('../models/RSO');
+
+
 // create event
 router.post('/create', (req, res) => {
     const { pid, aid, uid } = req.body
@@ -61,6 +69,15 @@ router.post('/create', (req, res) => {
             return addPublicEvent({ eid, aid });
         if (type === 'Private')
             return addPrivateEvent({ eid, aid, uid })
+        if (type === 'RSO') {
+            const rid = findRSOByAid(aid)
+            .then((data) => data.rid)
+            .catch((err) => {
+                console.log(err);
+                throw err;
+            })
+            return addRSOEvent({ eid, rid })
+        }
     })
     .then(() => {
         res.status(200).send();
@@ -73,11 +90,11 @@ router.post('/create', (req, res) => {
 
 //get all events
 router.get('/allEvents', (req, res) => {
-    const {uid} = req.body;
+    const {uid, rid} = req.body;
 
-    Promise.all([findAllPublicEvents(), findAllPrivateEvents(uid)])
+    Promise.all([findAllPublicEvents(), findAllPrivateEvents(uid), findAllRSOEvents(rid)])
     .then(results => {
-        const allEvents = [...results[0], ...results[1]];
+        const allEvents = [...results[0], ...results[1], ...results[2]];
 
         res.json(allEvents);
     })
@@ -87,8 +104,8 @@ router.get('/allEvents', (req, res) => {
 })
 
 //get individual event
-router.get('/:eid', (res, req) => {
-    const { eid } = req.body;
+router.get('/:eid', (req, res) => {
+    const { eid } = req.params
     findEventByEid(eid)
     .then((result) => res.json(result))
     .catch((err) => res.status(400).json({message: "Something went wrong", err}));

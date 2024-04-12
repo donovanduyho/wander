@@ -3,7 +3,7 @@ const axios = require('axios');
 
 async function findLocationByLid(lid) {
     return database.query("SELECT * FROM Event_Location WHERE lid = ?", [lid])
-    .then(([row]) => row[0])
+    .then(([data]) => data[0])
     .catch(err => {console.log("Location lid: ", err);
     throw err;
     })
@@ -11,7 +11,7 @@ async function findLocationByLid(lid) {
 
 async function findLocationByLname(lname) {
     return database.query("SELECT * FROM Event_Location WHERE lname = ?", [lname])
-    .then(([row]) => row[0])
+    .then(([data]) => data[0])
     .catch(err => {console.log(err);
     throw err;
     })
@@ -19,7 +19,7 @@ async function findLocationByLname(lname) {
 
 async function findLocationByAddress(address) {
     return database.query("SELECT * FROM Event_Location WHERE address LIKE ?", [ '%' + address + '%'])
-    .then(([row]) => row[0])
+    .then(([data]) => data[0])
     .catch(err => {console.log(err);
     throw err;
     })
@@ -50,7 +50,7 @@ async function coordinates(address) {
         if (res.status == 200 && res.data.results.length > 0) 
             return res.data.results[0].geometry.location;
     }).catch(err => {
-        //console.log(err);
+        console.log(err);
         throw err;
     })
     return coordinate;

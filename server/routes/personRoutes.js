@@ -8,8 +8,7 @@ const { findPersonByPid,
     findPersonByUsername, 
     findPersonByEmail, 
     addPerson, 
-    deletePerson,
-    updatePerson
+    deletePerson
 } = require('../models/Person');
 
 router.get("/getByPid", (req, res) => {

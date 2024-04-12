@@ -47,7 +47,7 @@ async function addStudent(student) {
         last_name,
         phone,
         email,
-        access: 'Student'
+        access: 'student'
     });
     
     
@@ -69,7 +69,7 @@ async function findStudentByUsername(username) {
         return null;
         }
     const student = await database.query("SELECT * FROM Students WHERE pid = ?", [person.pid])
-    .then(([rows]) => rows[0])
+    .then(([data]) => data[0])
     .catch((err) => {
         console.log(err);
         throw err;
