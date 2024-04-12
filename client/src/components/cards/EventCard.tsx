@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 interface Props {
     eid: number;
+}
+
+interface Details {
     name: string;
     event_location: string;
     time: string;
@@ -9,32 +13,28 @@ interface Props {
     description: string;
 }
 
-const EventCard = () => {
-    const [event, setEvent] = useState<Props | null>(null);
+const EventCard = ({ eid }: Props) => {
+    const [event, setEvent] = useState<Details | null>(null);
 
     useEffect(() => {
-        const fetchEvents = async () => {
+        const fetchEvent = async () => {
             try {
-                const res = await fetch("http://localhost:8000/event/1");
-                if (!res.ok) {
-                    console.log("failed to fetch!");
-                }
-
-                const data = await res.json();
-                setEvent(data);
+                const response = await axios.get(
+                    `http://localhost:8000/events/${eid}`
+                );
+                setEvent(response.data);
             } catch (error) {
-                console.error("Error fetching events:", error);
+                console.error("Error fetching event:", error);
             }
         };
 
-        fetchEvents();
-    }, []);
+        fetchEvent();
+    }, [eid]);
 
     return (
         <>
-            <h1>Event</h1>
             {event ? (
-                <div>
+                <div className="text-white">
                     <h2>{event.name}</h2>
                     <p>{event.event_location}</p>
                     <p>{event.time}</p>
@@ -42,7 +42,7 @@ const EventCard = () => {
                     <p>{event.description}</p>
                 </div>
             ) : (
-                <p>Loading...</p>
+                <p className="text-white">Loading...</p>
             )}
         </>
     );
