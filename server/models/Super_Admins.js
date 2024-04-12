@@ -18,7 +18,7 @@ async function findSABySpid(spid) {
 }
 
 async function findSAByUsername(username) {
-    const person = await findPersonByUsernameAccess(username, 'super admin');
+    const person = await findPersonByUsernameAccess(username, 'super_admin');
 
     if (!person) {
         return null;

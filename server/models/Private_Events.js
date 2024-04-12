@@ -1,4 +1,5 @@
 const database = require('../database');
+const moment = require('moment');
 
 async function findPrivateEventByEid(eid) {
     return database.query("SELECT * FROM Private_Events p INNER JOIN Events e ON p.eid = e.eid WHERE eid = ?", [eid])
@@ -39,7 +40,7 @@ async function addPrivateEvent(event) {
 
 async function findAllPrivateEvents(uid) {
     return database.query("SELECT * FROM Events WHERE eid IN (SELECT eid FROM Private_Events WHERE uid = ?)", [uid])
-    .then(([data]) => data.map(row => ({ ...row, type: "Private"})))
+    .then(([data]) => data.map(row => ({...row, type: "Private"})))
     .catch((err) => {
         console.log('Public Events FindAll', err);
         throw err;

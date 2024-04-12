@@ -2,7 +2,8 @@ const { json } = require('express');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
-const passport = require('passport')
+const passport = require('passport');
+const database = require('../database');
 
 const {
     findEventByEid,
@@ -114,6 +115,7 @@ router.get('/:eid', (req, res) => {
     .then((result) => res.json(result))
     .catch((err) => res.status(400).json({message: "Something went wrong", err}));
 })
+
 
 
 module.exports = router;
