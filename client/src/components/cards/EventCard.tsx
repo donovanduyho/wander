@@ -34,7 +34,7 @@ const EventCard = ({ eid }: Props) => {
     return (
         <>
             {event ? (
-                <div className="text-white">
+                <div className="text-white bg-neutral-700">
                     <h2>{event.name}</h2>
                     <p>{event.event_location}</p>
                     <p>{event.time}</p>
