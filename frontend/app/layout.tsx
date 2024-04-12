@@ -5,7 +5,7 @@ import "./globals.css";
 import Topbar from "@/components/shared/Topbar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import RightSidebar from "@/components/shared/RightSidebar";
-import { RequireAuth } from "react-auth-kit";
+import Providers from "./providers";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -23,25 +23,27 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body
-                className={cn(
-                    "min-h-screen bg-background font-sans antialiased",
-                    fontSans.variable
-                )}
-            >
-                <Topbar />
+        <Providers>
+            <html lang="en">
+                <body
+                    className={cn(
+                        "min-h-screen bg-background font-sans antialiased",
+                        fontSans.variable
+                    )}
+                >
+                    <Topbar />
 
-                <main className="flex flex-row">
-                    <LeftSidebar />
+                    <main className="flex flex-row">
+                        <LeftSidebar />
 
-                    <section className="flex min-h-screen flex-1 flex-col items-center px-6 pb-10 pt-28">
-                        <div className="w-full max-w-4xl">{children}</div>
-                    </section>
+                        <section className="flex min-h-screen flex-1 flex-col items-center px-6 pb-10 pt-28">
+                            <div className="w-full max-w-4xl">{children}</div>
+                        </section>
 
-                    <RightSidebar />
-                </main>
-            </body>
-        </html>
+                        <RightSidebar />
+                    </main>
+                </body>
+            </html>
+        </Providers>
     );
 }
