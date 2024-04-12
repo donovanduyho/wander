@@ -78,7 +78,7 @@ export default function Comment() {
                     />
 
                     <Button type="submit" className="w-full">
-                        Create Event
+                        Submit
                     </Button>
                 </form>
             </Form>

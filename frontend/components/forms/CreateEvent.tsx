@@ -14,6 +14,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 
 const FormSchema = z.object({
     name: z.string().min(3).max(30),
@@ -44,7 +45,26 @@ export default function CreateEvent() {
     });
 
     const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
-        //TODO: Call create event api endpoint
+        try {
+            const response = await axios.post(
+                "http://localhost:8000/events/create",
+                {
+                    name: values.name,
+                    description: values.description,
+                    type: values.type,
+                    date: values.date,
+                    email: values.email,
+                    phone: values.phone,
+                    lname: values.lname,
+                    address: values.address,
+                    category: values.category,
+                }
+            );
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+
         console.log({ values });
     };
 
@@ -177,7 +197,7 @@ export default function CreateEvent() {
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <FormLabel>LNAME</FormLabel>
+                                    <FormLabel>Location</FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder=""

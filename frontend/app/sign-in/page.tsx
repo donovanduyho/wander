@@ -132,7 +132,7 @@ export default function Page() {
                         onClick={() => router.push("/")}
                         className="w-full"
                     >
-                        Create Account
+                        Login
                     </Button>
                 </form>
             </Form>
