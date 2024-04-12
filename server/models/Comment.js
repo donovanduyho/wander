@@ -1,3 +1,4 @@
+const { query } = require('../database');
 const database = require('../database');
 
 async function findCommentByCid(cid) {
@@ -36,6 +37,11 @@ async function deleteComment(comment) {
         console.log(err);
         throw err;
     })
+}
+
+async function listComments(eid) {
+    database.query("SELECT * FROM Comment WHERE eid = ?")
+    .then(([data]) => data)
 }
 
 

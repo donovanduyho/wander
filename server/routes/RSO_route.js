@@ -6,6 +6,7 @@ const {
     findRSOByName,
     addRSO,
     findRSOByAid,
+    findRSOsByUid
 } = require('../models/RSO')
 
 const {
@@ -81,9 +82,9 @@ router.post('/join', async (req, res) => {
                 rid
             }
             addRSOMember(member)
-            .then((result) => res.status(200).json({message: "Successfully joined RSO"}))
-            .catch((err) => {
-                res.status(400).json({ message: "Something wen't wrong joining RSO"});
+            .then(() => res.status(200).json({message: "Successfully joined RSO"}))
+            .catch(() => {
+                res.status(400).json({ message: "Something went wrong joining RSO"});
             })
         }
     }).catch((err) => {
@@ -98,5 +99,12 @@ router.delete('/leave', async (req, res) => {
     .then(() => res.status(200).json({ message: "Successfully left RSO"}))
     .catch((err) => res.status(400).json({ message: "Error leaving RSO" + err}))
 })
+
+router.get('/showRSOs', (req, res) => {
+    const { uid } = req.body
+    findRSOsByUid(uid).then((data) => res.status(200).json({data}))
+    .catch(() => res.status(400).json({ message : "Error returning RSOs"}))
+})
+
 
 module.exports = router;

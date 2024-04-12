@@ -42,6 +42,15 @@ async function findRSOByAid(aid) {
     })
 }
 
+async function findRSOsByUid(uid) {
+    return database.query("SELECT name FROM RSO WHERE uid = ?", [uid])
+    .then(([data]) => data.map(RSO => RSO.name))
+    .catch((err) => {
+        console.log("Error displaying RSOs");
+        throw err;
+    })
+}
+
 
 
 
@@ -51,4 +60,5 @@ module.exports = {
     findRSOByName,
     addRSO,
     findRSOByAid,
+    findRSOsByUid
 }
