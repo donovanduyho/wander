@@ -36,7 +36,7 @@ async function findUniBySpid(spid) {
 
 async function findUniByName(name) {
     return database.query("SELECT * FROM Universities u INNER JOIN Event_Location l ON u.location = l.lname WHERE name = ?", [name])
-    .then(([rows]) => rows[0])
+    .then(([rows]) => rows[0].uid)
     .catch(err => {
         console.log(err);
         throw err;
@@ -65,15 +65,6 @@ async function addUni(university) {
     return database.query("INSERT INTO Universities (spid, name, description, student_count, picture, location) VALUES (?,?,?,?,?,?)", [spid, name, description, student_count, picture, lname])
     .then(([result]) => result.insertId)
     .catch(err => {
-        console.log(err);
-        throw err;
-    })
-}
-
-async function searchForUni(search) {
-    return database.query("SELECT * FROM Universities WHERE name LIKE ?", [ '%' + search + '%'])
-    .then(([data]) => data.map(row => row))
-    .catch((err) => {
         console.log(err);
         throw err;
     })
