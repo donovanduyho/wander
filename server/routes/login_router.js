@@ -56,6 +56,7 @@ router.post('/login', async(req,res) => {
             pid : user.pid,
             spid: user.spid,
             uid: user.uid,
+            rid: user.rid,
             username: user.username,
             first_name: user.first_name,
             last_name: user.last_name,
@@ -71,7 +72,14 @@ router.post('/login', async(req,res) => {
                 console.log(err);
             }
             res.status(200).json({
+                pid : user.pid,
+                spid: user.spid,
                 uid: user.uid,
+                rid: user.rid,
+                username: user.username,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                access: user.access,
                 token: 'Bearer ' + token
             })
         })
