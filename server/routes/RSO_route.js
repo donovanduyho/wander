@@ -77,15 +77,16 @@ router.post('/join', async (req, res) => {
         rid,
     } = req.body
 
+    const member = {
+        pid,
+        rid
+    }
+
     findRSOMemberPidRid(pid, rid)
     .then((result) => {
         if (result)
             res.status(400).json({ message: "You have already joined this RSO"});
         else {
-            const member = {
-                pid,
-                rid
-            }
             addRSOMember(member)
             .then(() => res.status(200).json({message: "Successfully joined RSO"}))
             .catch(() => {

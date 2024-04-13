@@ -9,14 +9,15 @@ async function findRSOMemberPidRid(pid, rid) {
     })
 }
 
-async function addRSOMember(pid, rid) {
+async function addRSOMember(member) {
+    const {rid, pid} = member
     database.query("UPDATE Person SET rid = ? WHERE pid = ?", [rid, pid])
     .then(() => console.log("person updates"))
     .catch((err) => {
         console.log(err);
         throw err;
     })
-    return database.query("INSERT INTO Student_RSOs (pid, rid) VALUES (?, ?)", [pid, rid])
+    return database.query("INSERT INTO Student_RSOs (rid, pid) VALUES (?, ?)", [rid, pid])
     .then(([id]) => id.insertId)
     .catch((err) => {
         console.log(err);
