@@ -172,9 +172,8 @@ router.post('/registerSA', async (req, res) => {
     })
 })
 
-router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/current', (req, res) => {
 
-    
     const {
         pid,
         uid,
@@ -184,7 +183,7 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
         last_name,
         aid,
         access
-    } = req.user;
+    } = req.body;
 
 
     res.json({
