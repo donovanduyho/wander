@@ -27,7 +27,7 @@ router.get("/getByUsername", (req, res) => {
     .catch(() => res.status(400).json({ message : "Error finding person"}));
 })
 
-router.get("/getByEmail", (req, res) => {
+router.post("/getByEmail", (req, res) => {
     const {
         email
     } = req.body;

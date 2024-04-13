@@ -17,13 +17,13 @@ router.post("/addLocation", (req, res) => {
     .catch(() => res.status(400).json({message: "error creating location"}));
 });
 
-router.get("/getLocationByLname", (req, res) => {
+router.post("/getLocationByLname", (req, res) => {
     const {lname} = req.body;
     findLocationByLname(lname).then((data) => res.status(200).json({ data }))
     .catch(() => res.status(400).json({message: "error returning lname"}));
 });
 
-router.get("/getLocationByLid", (req, res) => {
+router.post("/getLocationByLid", (req, res) => {
     const {lid} = req.body;
     findLocationByLid(lid).then((data) => res.status(200).json({ data }))
     .catch(() => res.status(400).json({message: "error returning lname"}));

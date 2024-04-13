@@ -180,7 +180,7 @@ router.post('/registerSA', async (req, res) => {
     })
 })
 
-router.get('/current', (req, res) => {
+router.post('/current', (req, res) => {
 
     const {
         pid,

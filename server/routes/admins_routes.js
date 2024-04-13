@@ -8,7 +8,7 @@ const {
     findAdminByPid
 } = require('../models/Admins')
 
-router.get("/getAdminByAid", (req, res) => {
+router.post("/getAdminByAid", (req, res) => {
     const {
         aid
     } =  req.body;
@@ -16,7 +16,7 @@ router.get("/getAdminByAid", (req, res) => {
     .catch(() => res.status(400).json({message: "something went wrong finding admin"}))
 })
 
-router.get("/getAdminByUsername", (req, res) => {
+router.post("/getAdminByUsername", (req, res) => {
     const {
         username
     } = req.body

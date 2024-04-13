@@ -20,7 +20,7 @@ const {
     hashPassword 
 } = require('../controllers/encrypt');
 
-router.get('/findSABySpid', (req, res) => {
+router.post('/findSABySpid', (req, res) => {
     const {
         spid
     } = req.body;
@@ -28,7 +28,7 @@ router.get('/findSABySpid', (req, res) => {
     .catch(() => res.status(400).json({ message : "error finding super admin"}))
 })
 
-router.get("/getSAByUsername", (req, res) => {
+router.post("/getSAByUsername", (req, res) => {
     const {
         username
     } = req.body

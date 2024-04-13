@@ -16,7 +16,7 @@ router.get('/:eid/comments', (req, res) => {
 
 router.post('/:eid/post'), (req, res) => {
     const {eid} = req.param;
-    const {pid} = req.user;
+    const {pid} = req.body;
     const {
         event_comment,
         rating
