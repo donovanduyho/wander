@@ -47,6 +47,12 @@ async function listComments(eid) {
     })
 }
 
+async function updateComment(comment) {
+    const {cid, pid, text, rating} = comment;
+
+    return database.query("UPDATE Comment SET event_comment = ?")
+}
+
 
 module.exports = {
     findCommentByCid,

@@ -31,6 +31,7 @@ const {
     comparePassword,
 } = require('../controllers/encrypt');
 const { findUniByName } = require('../models/Universities');
+const { jwtDecode } = require('jwt-decode');
 
 
 router.post('/login', async(req,res) => {
@@ -172,8 +173,7 @@ router.post('/registerSA', async (req, res) => {
 })
 
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log("user information:");
-    console.log(req.user);
+
     
     const {
         pid,
@@ -186,7 +186,6 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
         access
     } = req.user;
 
-    console.log(req.user);
 
     res.json({
         pid,
@@ -197,7 +196,8 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
         last_name,
         username,
         access
-    });
+    })
+    .catch((err) => res.status(400).json({ message: "Error returning info"}))
 })
 
 module.exports = router;

@@ -94,8 +94,8 @@ router.post('/create', (req, res) => {
 })
 
 //get all events
-router.post('/allEvents', (req, res) => {
-    const {uid, rid} = req.body;
+router.get('/allEvents', passport.authenticate('jwt', {session: false}) ,(req, res) => {
+    const {uid, rid} = req.user;
     console.log(uid);
     Promise.all([findAllPublicEvents(), findAllPrivateEvents(uid), findAllRSOEvents(rid)])
     .then(results => {
