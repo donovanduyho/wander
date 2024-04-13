@@ -30,7 +30,7 @@ async function deleteComment(comment) {
         pid
     } = comment;
 
-    database.query("DELETE FROM Comment WHERE eid = ? AND pid = ?", [eid, pid])
+    database.query("DELETE FROM Comment WHERE event_id = ? AND pid = ?", [eid, pid])
     .then(([result]) => result)
     .catch((err) => {
         console.log(err);
@@ -39,7 +39,7 @@ async function deleteComment(comment) {
 }
 
 async function listComments(eid) {
-    database.query("SELECT * FROM Comment WHERE eid = ?", [eid])
+    database.query("SELECT * FROM Comment WHERE event_id = ?", [eid])
     .then(([data]) => data.map(row => ({...row})))
     .catch((err) => {
         console.log(err);
@@ -48,8 +48,8 @@ async function listComments(eid) {
 }
 
 async function updateComment(comment) {
-    const {cid, pid, text, rating} = comment;
-    return database.query("UPDATE Comment SET event_comment = ?, rating = ? WHERE cid = ? AND pid = ?" [text, rating, cid, pid])
+    const {cid, pid, event_comment, rating} = comment;
+    return database.query("UPDATE Comment SET event_comment = ?, rating = ? WHERE cid = ? AND person_id = ?", [event_comment, rating, cid, pid])
     .catch((err) => {
         console.log(err);
         throw err;

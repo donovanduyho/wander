@@ -54,11 +54,11 @@ router.delete('/:eid/delete', (req, res) => {
 
 router.put('/:cid/edit', (req, res) => {
     const {cid} = req.params;
-    const {pid, text, rating} = req.body;
+    const {pid, event_comment, rating} = req.body;
     const comment = {
         cid,
         pid,
-        text,
+        event_comment,
         rating
     }
     updateComment(comment).then(() => res.status(200).json({ message: "Comment successfully updated"}))
