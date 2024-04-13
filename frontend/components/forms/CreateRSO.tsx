@@ -15,6 +15,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+
+interface UserData {
+    uid: string;
+    pid: string;
+    spid: string;
+    rid: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    access: string;
+}
 
 const FormSchema = z.object({
     name: z.string().min(3).max(30),
@@ -22,6 +34,8 @@ const FormSchema = z.object({
 });
 
 export default function Comment() {
+    const auth = useAuthUser<UserData>();
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -32,12 +46,16 @@ export default function Comment() {
 
     const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
         try {
-            const response = axios.post("http://localhost:8000/events/");
+            const response = axios.post("http://localhost:8000/rso/createRso", {
+                pid: auth?.pid,
+                name: values.name,
+                description: values.description,
+                uid: auth?.uid,
+            });
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
-
-        console.log({ values });
     };
 
     return (
@@ -84,7 +102,7 @@ export default function Comment() {
                     />
 
                     <Button type="submit" className="w-full">
-                        Register
+                        Create RSO
                     </Button>
                 </form>
             </Form>

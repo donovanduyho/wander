@@ -8,16 +8,22 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import CreateRSO from "@/components/forms/CreateRSO";
 
+interface RSO {
+    name: string;
+    description: string;
+    rid: string;
+}
+
 interface UserData {
     uid: string;
 }
 
 export default function Community() {
-    const [rso, setRso] = useState("");
+    const [rsos, setRsos] = useState<RSO[]>([]);
     const auth = useAuthUser<UserData>();
 
     useEffect(() => {
-        const getRsos = async () => {
+        const getAllRsos = async () => {
             try {
                 const response = await axios.post(
                     "http://localhost:8000/rso/showRSOs",
@@ -25,22 +31,29 @@ export default function Community() {
                         uid: auth?.uid,
                     }
                 );
-                setRso(response.data);
+                setRsos(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.log(error);
             }
         };
 
-        getRsos();
+        getAllRsos();
     }, []);
 
     return (
         <NextAuth fallbackPath="/sign-in">
             <div className="flex flex-col gap-4">
                 <h1 className="font-bold text-2xl">RSOs</h1>
-                <Button>Create a Registered Student Organization</Button>
                 <CreateRSO />
-                <RSOCard name={rso} />
+                {rsos.map((rso) => (
+                    <RSOCard
+                        key={rso.rid}
+                        name={rso.name}
+                        description={rso.description}
+                        rid={rso.rid}
+                    />
+                ))}
             </div>
         </NextAuth>
     );

@@ -10,16 +10,20 @@ import Image from "next/image";
 
 interface Props {
     name: string;
+    description: string;
+    rid: string;
 }
 
-const RSOCard = ({ name }: Props) => {
+const RSOCard = ({ name, description, rid }: Props) => {
     return (
         <Card>
             <CardHeader>
                 <CardTitle>{name}</CardTitle>
             </CardHeader>
 
-            <CardContent></CardContent>
+            <CardContent>
+                <p>{description}</p>
+            </CardContent>
 
             <CardFooter></CardFooter>
         </Card>
