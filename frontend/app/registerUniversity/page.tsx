@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 const formSchema = z
     .object({
@@ -99,6 +98,8 @@ export default function Page() {
                             );
                         }}
                     />
+
+                    <h2 className="font-semibold">Admin Credentials</h2>
 
                     <FormField
                         control={form.control}
@@ -240,15 +241,10 @@ export default function Page() {
                         }}
                     />
                     <Button type="submit" className="w-full">
-                        Create Account
+                        Register
                     </Button>
                 </form>
             </Form>
-
-            <div>
-                <h3>Already have an account?</h3>
-                <Link href="/sign-in">Login</Link>
-            </div>
         </div>
     );
 }
