@@ -66,6 +66,13 @@ export default function Page() {
                     },
                     userState: {
                         uid: response.data.uid,
+                        pid: response.data.pid,
+                        spid: response.data.spid,
+                        rid: response.data.rid,
+                        username: response.data.username,
+                        first_name: response.data.first_name,
+                        last_name: response.data.last_name,
+                        access: response.data.access,
                     },
                 })
             ) {

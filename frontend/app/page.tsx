@@ -16,6 +16,13 @@ interface Event {
 
 interface UserData {
     uid: string;
+    pid: string;
+    spid: string;
+    rid: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    access: string;
 }
 
 export default function Home() {
@@ -29,7 +36,7 @@ export default function Home() {
                     "http://localhost:8000/events/allEvents",
                     {
                         uid: auth?.uid,
-                        rid: 1,
+                        rid: auth?.rid,
                     }
                 );
                 setEvents(response.data);
