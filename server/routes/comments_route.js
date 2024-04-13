@@ -5,7 +5,8 @@ const {
     findCommentByCid,
     addComment,
     deleteComment,
-    listComments
+    listComments,
+    updateComment
 } = require('../models/Comment')
 
 router.get('/:eid/comments', (req, res) => {

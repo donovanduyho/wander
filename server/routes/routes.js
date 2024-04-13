@@ -12,6 +12,7 @@ router.use("/events", require('./events_route'));
 router.use("/user", require('./login_router'));
 router.use('/test', require('./test_router'));
 router.use("/rso", require('./RSO_route'));
+router.use("/comment", require('./comments_route'));
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
