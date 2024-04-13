@@ -70,11 +70,22 @@ async function addUni(university) {
     })
 }
 
+async function searchForUni(search) {
+    return database.query("SELECT * FROM Universities WHERE name LIKE ?", [ '%' + search + '%'])
+    .then(([data]) => data.map(row => row))
+    .catch((err) => {
+        console.log(err);
+        throw err;
+    })
+}
+
+
 module.exports = {
     findUniByUid,
     findUniNameList,
     findUniBySpid,
     addUni,
-    findUniByName
+    findUniByName,
+    searchForUni
 }
 

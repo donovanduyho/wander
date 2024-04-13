@@ -1,11 +1,13 @@
 const express = require('express');
+const database = require('../database');
 const router = express.Router();
 const {
     findUniByUid,
     findUniNameList,
     findUniBySpid,
     addUni,
-    findUniByName
+    findUniByName,
+    searchForUni
 } = require('../models/Universities');
 
 
@@ -42,7 +44,15 @@ router.post('/addUni', (req, res) => {
             .catch(() => res.status(400).json({ message: "Error creating university page"})); 
         }
     })
-});   
+});
+
+router.post('/searchForUni', (req, res) => {
+    const { search } = req.body;
+
+    searchForUni(search)
+    .then((data) => res.status(200).json(data))
+    .catch((err) => res.status(400).json("Error searching for uni"))
+})
     
     
 
