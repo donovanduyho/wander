@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Comment from "@/components/forms/Comment";
 
 interface Event {
-    eid: number;
+    eid: string;
     name: string;
     event_location: string;
     time: string;
@@ -37,6 +37,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         <section>
             {event ? (
                 <EventCard
+                    eid={event.eid}
                     name={event.name}
                     event_location={event.event_location}
                     time={event.time}

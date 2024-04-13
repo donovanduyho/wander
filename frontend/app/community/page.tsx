@@ -6,10 +6,6 @@ import { useState, useEffect } from "react";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import axios from "axios";
 
-interface RSO {
-    name: string;
-}
-
 interface UserData {
     uid: string;
 }
@@ -21,8 +17,11 @@ export default function Community() {
     useEffect(() => {
         const getRsos = async () => {
             try {
-                const response = await axios.get(
-                    `http://localhost:8000/rso/showRSOs/${auth?.uid}`
+                const response = await axios.post(
+                    "http://localhost:8000/rso/showRSOs",
+                    {
+                        uid: auth?.uid,
+                    }
                 );
                 setRso(response.data);
             } catch (error) {

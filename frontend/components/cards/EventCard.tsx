@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import {
     Card,
     CardContent,
@@ -9,10 +8,12 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { useState, useEffect } from "react";
 import { formatDateString } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface Props {
+    eid: string;
     name: string;
     event_location: string;
     time: string;
@@ -21,12 +22,19 @@ interface Props {
 }
 
 const EventCard = ({
+    eid,
     name,
     event_location,
     time,
     category,
     description,
 }: Props) => {
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(`/event/${eid}`);
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -39,6 +47,10 @@ const EventCard = ({
             <CardContent>
                 <p>{description}</p>
             </CardContent>
+
+            <CardFooter>
+                <Button onClick={handleClick}>More Details</Button>
+            </CardFooter>
         </Card>
     );
 };

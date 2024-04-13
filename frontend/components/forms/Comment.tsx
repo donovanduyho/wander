@@ -14,6 +14,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 
 const FormSchema = z.object({
     event_comment: z.string().min(3).max(50),
@@ -30,7 +31,12 @@ export default function Comment() {
     });
 
     const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
-        //TODO: Call add comment to event api
+        try {
+            const response = axios.get("");
+        } catch (error) {
+            console.log(error);
+        }
+
         console.log({ values });
     };
 
