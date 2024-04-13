@@ -49,7 +49,7 @@ router.post('/addUni', (req, res) => {
 router.post('/searchForUni', (req, res) => {
     const { search } = req.body;
 
-    findUniByName(search)
+    searchForUni(search)
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json("Error searching for uni"))
 })

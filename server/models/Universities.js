@@ -36,7 +36,7 @@ async function findUniBySpid(spid) {
 
 async function findUniByName(name) {
     return database.query("SELECT * FROM Universities u INNER JOIN Event_Location l ON u.location = l.lname WHERE name = ?", [name])
-    .then(([rows]) => rows[0].uid)
+    .then(([rows]) => rows[0])
     .catch(err => {
         console.log(err);
         throw err;
@@ -70,6 +70,16 @@ async function addUni(university) {
     })
 }
 
+async function searchForUni(name) {
+    return database.query("SELECT * FROM Universities WHERE name = ?", [name])
+    .then(([rows]) => rows[0].uid)
+    .catch(err => {
+        console.log(err);
+        throw err;
+    })
+}
+
+
 
 module.exports = {
     findUniByUid,
@@ -77,5 +87,6 @@ module.exports = {
     findUniBySpid,
     addUni,
     findUniByName,
+    searchForUni
 }
 
