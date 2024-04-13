@@ -30,7 +30,7 @@ const {
     hashPassword,
     comparePassword,
 } = require('../controllers/encrypt');
-const { findUniByName } = require('../models/Universities');
+const { findUniByName, addUni } = require('../models/Universities');
 const { jwtDecode } = require('jwt-decode');
 
 

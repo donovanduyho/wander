@@ -20,9 +20,9 @@ async function findPersonByEmail(email) {
 }
 
 async function addPerson(person) {
-    const { username, password, first_name, last_name, phone, email, access } = person;
-    return database.query("INSERT INTO Person (username, password, first_name, last_name, phone, email, access) VALUES (?,?,?,?,?,?,?)", 
-    [username, password, first_name, last_name, phone, email, access])
+    const { username, password, first_name, last_name, phone, email, access, uid } = person;
+    return database.query("INSERT INTO Person (username, password, first_name, last_name, phone, email, access, uid) VALUES (?,?,?,?,?,?,?)", 
+    [username, password, first_name, last_name, phone, email, access, uid])
     .then(() => findPersonByUsername(username))
     .then((data) => data.pid)
     .catch(err => console.log(err));
