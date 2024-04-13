@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import Link from "next/link";
 
 const FormSchema = z
     .object({
@@ -88,7 +89,7 @@ export default function Page() {
     };
 
     return (
-        <div className="px-8 pt-2">
+        <div className="px-8 pt-2 flex flex-col gap-4">
             <h1 className="font-bold text-2xl">Login</h1>
             <Form {...form}>
                 <form
@@ -159,6 +160,11 @@ export default function Page() {
                     </Button>
                 </form>
             </Form>
+
+            <div>
+                <h3>Dont have an account?</h3>
+                <Link href="/sign-up">Create an account</Link>
+            </div>
         </div>
     );
 }
