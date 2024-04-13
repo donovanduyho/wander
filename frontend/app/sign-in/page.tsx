@@ -65,7 +65,7 @@ export default function Page() {
                         type: "Bearer",
                     },
                     userState: {
-                        username: values.username,
+                        uid: response.data.uid,
                     },
                 })
             ) {
@@ -78,8 +78,6 @@ export default function Page() {
         } catch (error) {
             console.log(error);
         }
-
-        // console.log({ values });
     };
 
     return (
@@ -149,11 +147,7 @@ export default function Page() {
                             );
                         }}
                     />
-                    <Button
-                        type="submit"
-                        //onClick={() => router.push("/")}
-                        className="w-full"
-                    >
+                    <Button type="submit" className="w-full">
                         Login
                     </Button>
                 </form>

@@ -1,27 +1,9 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-
-export default function RSOCard() {
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle>RSO Card</CardTitle>
-                <CardDescription>Description</CardDescription>
-            </CardHeader>
-
-            <CardContent>
-                <p>Content</p>
-            </CardContent>
-
-            <CardFooter>
-                <p>Footer</p>
-            </CardFooter>
-        </Card>
-    );
+interface Props {
+    name: string;
 }
+
+const RSOCard = ({ name }: Props) => {
+    return <h2>{name}</h2>;
+};
+
+export default RSOCard;

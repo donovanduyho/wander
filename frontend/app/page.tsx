@@ -3,6 +3,7 @@
 import axios from "axios";
 import EventCard from "@/components/cards/EventCard";
 import { useState, useEffect } from "react";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 interface Event {
     eid: number;
@@ -13,8 +14,13 @@ interface Event {
     description: string;
 }
 
+interface UserData {
+    uid: string;
+}
+
 export default function Home() {
     const [events, setEvents] = useState<Event[]>([]);
+    const auth = useAuthUser<UserData>();
 
     useEffect(() => {
         const getAllEvents = async () => {
@@ -22,8 +28,10 @@ export default function Home() {
                 const response = await axios.post(
                     "http://localhost:8000/events/allEvents",
                     {
-                        uid: 1, rid: 1 
-                    });
+                        uid: auth?.uid,
+                        rid: 1,
+                    }
+                );
                 setEvents(response.data);
                 console.log(response.data);
             } catch (error) {
