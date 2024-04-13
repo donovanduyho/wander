@@ -44,3 +44,18 @@ router.delete('/:eid/delete', (req, res) => {
     deleteComment(comment).then(() => res.status(200).json({ message: "comment successfully deleted"}))
     .catch(()  => res.status(400).json({ message: "Error deleting comment"}));
 })
+
+router.put('/:cid/edit', (req, res) => {
+    const {cid} = req.params;
+    const {pid, text, rating} = req.body;
+    const comment = {
+        cid,
+        pid,
+        text,
+        rating
+    }
+    updateComment(comment).then(() => res.status(200).json({ message: "Comment successfully updated"}))
+    .catch(() => res.status(400).json({ message: "Error editing comment"})); 
+})
+
+module.exports = router;

@@ -49,8 +49,11 @@ async function listComments(eid) {
 
 async function updateComment(comment) {
     const {cid, pid, text, rating} = comment;
-
-    return database.query("UPDATE Comment SET event_comment = ?")
+    return database.query("UPDATE Comment SET event_comment = ?, rating = ? WHERE cid = ? AND pid = ?")
+    .catch((err) => {
+        console.log(err);
+        throw err;
+    })
 }
 
 
