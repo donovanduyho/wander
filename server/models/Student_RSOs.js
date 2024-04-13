@@ -9,8 +9,7 @@ async function findRSOMemberPidRid(pid, rid) {
     })
 }
 
-async function addRSOMember(member) {
-    const { pid, rid } = member;
+async function addRSOMember(pid, rid) {
     database.query("UPDATE Person SET rid = ? WHERE pid = ?", [rid, pid])
     .then(() => console.log("person updates"))
     .catch((err) => {

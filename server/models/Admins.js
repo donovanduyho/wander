@@ -1,5 +1,5 @@
 const database = require("../database");
-const { findUniByName } = require("./Universities");
+const { findUniByName, findUniByUid } = require("./Universities");
 
 async function findAdminByAid(aid) {
     return database.query("SELECT * FROM Admins WHERE aid = ?", [aid])
@@ -41,13 +41,13 @@ async function findAdminByPid(pid) {
 }
 
 async function addAdmin(admin) {
-    const { pid, uni } = admin;
-    const university = await findUniByName(uni);
+    const { pid, uid } = admin;
+    const university = await findUniByUid(uid);
     const spid = university.spid;
 
     return database.query("INSERT INTO Admins (pid, spid) VALUES (?, ?)", [pid, spid])
     .then(() => findAdminByPid(pid))
-    .then((data) => data.pid)
+    .then((data) => data.aid)
     .catch((err) => {
         console.log(err)
         throw err;

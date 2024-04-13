@@ -22,11 +22,13 @@ async function addRSO(RSO) {
     const {
         aid,
         name,
-        description
+        description,
+        uid
     } = RSO
 
-    return database.query("INSERT INTO RSO (aid, name, description) VALUES (?,?,?)", [aid, name, description])
-    .then(([result]) => result.insertId)
+    return database.query("INSERT INTO RSO (aid, name, description, uid) VALUES (?,?,?,?)", [aid, name, description, uid])
+    .then(() => findRSOByName(name))
+    .then((result) => result.rid)
     .catch(err => {
         console.log(err);
         throw err;

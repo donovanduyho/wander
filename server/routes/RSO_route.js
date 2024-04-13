@@ -29,7 +29,7 @@ router.post('/createRSO', (req, res) => {
         pid,
         name,
         description,
-        uni
+        uid
     } = req.body
     findRSOByName(name)
     .then((result) => {
@@ -38,18 +38,21 @@ router.post('/createRSO', (req, res) => {
         else {
             const newAdmin = {
                 pid,
-                uni
+                uid
             }
             addAdmin(newAdmin)
             .then((aid) => {
                 const RSO = {
                     aid,
                     name,
-                    description
+                    description,
+                    uid
                 }
                 addRSO(RSO)
                 .then((rid) => {
-                    addRSOMember(pid, rid);
+                    addRSOMember(pid, rid)
+                    .then(() => res.status(200).json({ message: "RSO successfully created"}))
+                    .catch(() => res.status(400).json({ message: "Error adding member to RSO"}));
                 })
                 .catch((err) => {
                     res.status(400).json({ message: "Error creating new RSO"});

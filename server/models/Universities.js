@@ -9,7 +9,7 @@ const {
 
 async function findUniByUid(uid) {
     return database.query("SELECT * FROM Universities u INNER JOIN Event_Location l ON u.location = l.lname WHERE uid = ?", [uid])
-    .then(([data]) => {data[0];console.log(data)})
+    .then(([data]) => data[0])
     .catch(err => {
         console.log('university file', err);
         throw err;
@@ -71,7 +71,7 @@ async function addUni(university) {
 }
 
 async function searchForUni(name) {
-    return database.query("SELECT * FROM Universities WHERE name = ?", [name])
+    return database.query("SELECT * FROM Universities u INNER JOIN Event_Location l ON u.location = l.lname WHERE name = ?", [name])
     .then(([rows]) => rows[0].uid)
     .catch(err => {
         console.log(err);
