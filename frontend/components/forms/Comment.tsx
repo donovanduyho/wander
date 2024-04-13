@@ -15,6 +15,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+
+interface UserData {
+    uid: string;
+    pid: string;
+    spid: string;
+    rid: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    access: string;
+}
 
 const FormSchema = z.object({
     event_comment: z.string().min(3).max(50),
@@ -22,6 +35,9 @@ const FormSchema = z.object({
 });
 
 export default function Comment() {
+    const auth = useAuthUser<UserData>();
+    const isAuthenticated = useIsAuthenticated();
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -35,6 +51,7 @@ export default function Comment() {
             const response = await axios.post(
                 "http://localhost:8000/comment/1/post",
                 {
+                    pid: auth?.pid,
                     event_comment: values.event_comment,
                     rating: values.rating,
                 }
@@ -44,8 +61,6 @@ export default function Comment() {
         } catch (error) {
             console.log(error);
         }
-
-        console.log({ values });
     };
 
     return (
