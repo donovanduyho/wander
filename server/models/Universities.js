@@ -77,6 +77,5 @@ module.exports = {
     findUniBySpid,
     addUni,
     findUniByName,
-    searchForUni
 }
 
