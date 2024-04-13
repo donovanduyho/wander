@@ -27,6 +27,10 @@ const {
 } = require('../models/Super_Admins');
 
 const {
+    findAllUserRSOs
+} = require('../models/Student_RSOs')
+
+const {
     hashPassword,
     comparePassword,
 } = require('../controllers/encrypt');
@@ -48,8 +52,6 @@ router.post('/login', async(req,res) => {
 
     const match = await comparePassword(password, user.password)
 
-    console.log("user info (login function)")
-    console.log(user)
     if (match) {
 
         const jwtInfo = {
@@ -63,8 +65,7 @@ router.post('/login', async(req,res) => {
             access: user.access
         };
 
-        console.log("jwt info: " + jwtInfo);
-        console.log(jwtInfo);
+        const ridInfo = findAllUserRSOs(user.pid)
         
         jwt.sign(jwtInfo, process.env.TOKEN_SECRET, { expiresIn: 3600 }, (err, token) => {
             if (err) {
@@ -80,6 +81,7 @@ router.post('/login', async(req,res) => {
                 first_name: user.first_name,
                 last_name: user.last_name,
                 access: user.access,
+                ridInfo,
                 token: 'Bearer ' + token
             })
         })

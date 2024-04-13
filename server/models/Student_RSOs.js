@@ -28,8 +28,19 @@ async function deleteRSOMember(member) {
     })
 }
 
+async function findAllUserRSOs(pid) {
+    database.query("SELECT * FROM Student_RSOs WHERE pid = ?", [pid])
+    .then(([result]) => result.map(row => row))
+    .catch((err) => {
+        console.log(err);
+        throw err;
+    })
+
+}
+
 module.exports = {
     findRSOMemberPidRid,
     addRSOMember,
-    deleteRSOMember
+    deleteRSOMember,
+    findAllUserRSOs
 }
