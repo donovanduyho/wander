@@ -9,7 +9,7 @@ const {
 } = require("../models/Person");
 
 async function findSABySpid(spid) {
-    return database.query("SELECT p.pid spid, access, username, first_name, last_name, email, phone FROM Super_Admins sa INNER JOIN Person p ON sa.pid = p.pid WHERE sa.spid = ?", [spid])
+    return database.query("SELECT p.pid spid, p.uid, access, username, first_name, last_name, email, phone FROM Super_Admins sa INNER JOIN Person p ON sa.pid = p.pid WHERE sa.spid = ?", [spid])
     .then(([data]) => data[0])
     .catch((err) => {
         console.log(err);
@@ -57,6 +57,7 @@ async function addSA(superAdmin) {
         last_name,
         phone,
         email,
+        uid,
         access: 'super_admin'
     });
 

@@ -21,7 +21,7 @@ const {
 } = require('../controllers/encrypt')
 
 async function findStudentByPid(pid) {
-    return database.query("SELECT p.pid, uid, username, first_name, last_name, email, phone, access FROM Students s INNER JOIN Person p ON s.pid = p.pid WHERE s.pid = ?", [pid])
+    return database.query("SELECT p.pid, p.uid, username, first_name, last_name, email, phone, access FROM Students s INNER JOIN Person p ON s.pid = p.pid WHERE s.pid = ?", [pid])
     .then(([data]) => data[0])
     .catch((err) => {
         console.log(err);
@@ -40,6 +40,10 @@ async function addStudent(student) {
         university
     } = student;
 
+    const uid = await findUniByName(university)
+    .then((data) => data.uid)
+    .catch((err) => console.log(err));
+
     const pid = await addPerson({
         username,
         password,
@@ -47,13 +51,9 @@ async function addStudent(student) {
         last_name,
         phone,
         email,
+        uid,
         access: 'student'
     });
-    
-    
-    const uid = await findUniByName(university)
-    .then((data) => data.uid)
-    .catch((err) => console.log(err));
 
     database.query("INSERT INTO Students (pid, uid) VALUES (?, ?)", [pid, uid])
     .catch(err => {

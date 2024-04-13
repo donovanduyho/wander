@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+
 
 const {
     findRSOByRid,
@@ -100,8 +102,8 @@ router.delete('/leave', async (req, res) => {
     .catch((err) => res.status(400).json({ message: "Error leaving RSO" + err}))
 })
 
-router.get('/showRSOs/:uid', (req, res) => {
-    const { uid } = req.params
+router.get('/showRSOs', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const { uid } = req.user
     console.log(uid);
     findRSOsByUid(uid).then((data) => res.json(data))
     .catch(() => res.status(400).json({ message : "Error returning RSOs"}))
