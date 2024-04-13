@@ -50,7 +50,8 @@ router.post('/createRSO', (req, res) => {
                 }
                 addRSO(RSO)
                 .then((rid) => {
-                    addRSOMember(pid, rid)
+                    const member = { pid, rid }
+                    addRSOMember(member)
                     .then(() => res.status(200).json({ message: "RSO successfully created"}))
                     .catch(() => res.status(400).json({ message: "Error adding member to RSO"}));
                 })
