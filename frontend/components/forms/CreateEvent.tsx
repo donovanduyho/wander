@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
     name: z.string().min(3).max(30),
@@ -42,6 +43,7 @@ interface UserData {
 
 export default function CreateEvent() {
     const auth = useAuthUser<UserData>();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -77,6 +79,7 @@ export default function CreateEvent() {
                 }
             );
             console.log(response);
+            router.push("/");
         } catch (error) {
             console.log(error);
         }
