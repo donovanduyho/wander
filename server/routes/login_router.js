@@ -65,7 +65,9 @@ router.post('/login', async(req,res) => {
             access: user.access
         };
 
-        const ridInfo = findAllUserRSOs(user.pid)
+        const ridInfo = await findAllUserRSOs(user.pid);
+
+        console.log(ridInfo);
         
         jwt.sign(jwtInfo, process.env.TOKEN_SECRET, { expiresIn: 3600 }, (err, token) => {
             if (err) {

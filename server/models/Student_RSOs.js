@@ -29,8 +29,8 @@ async function deleteRSOMember(member) {
 }
 
 async function findAllUserRSOs(pid) {
-    database.query("SELECT * FROM Student_RSOs WHERE pid = ?", [pid])
-    .then(([result]) => result.map(row => row))
+    return database.query("SELECT * FROM Student_RSOs WHERE pid = ?", [pid])
+    .then(([result]) => result.map(row => row.rid))
     .catch((err) => {
         console.log(err);
         throw err;
