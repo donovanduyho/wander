@@ -9,11 +9,6 @@ const {
     updateComment
 } = require('../models/Comment')
 
-router.get('/:eid/comments', (req, res) => {
-    const {eid} = req.params
-    listComments(eid).then((data) => res.status(200).json({data}))
-    .catch((err) => res.status(400).json({ message: "Something went wrong fetching comments"}))
-})
 
 router.post('/:eid/post', (req, res) => {
     const {eid} = req.params;
@@ -36,7 +31,7 @@ router.post('/:eid/post', (req, res) => {
 })
 
 router.get("/:eid/list", (req, res) => {
-    const eid = req.params
+    const {eid} = req.params
     listComments(eid).then((data) => res.status(200).json({ data }))
     .catch(() => res.status(400).json({ message: "Error listing comments"}))
 })

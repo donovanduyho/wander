@@ -16,7 +16,7 @@ async function addComment(comment) {
         event_comment,
         rating
     } = comment
-    database.query("INSERT INTO Comment (event_id, person_id, event_comment, rating, post_time) VALUES (?,?,?,?,NOW())", [eid, pid, event_comment, rating])
+    return database.query("INSERT INTO Comment (event_id, person_id, event_comment, rating, post_time) VALUES (?,?,?,?,NOW())", [eid, pid, event_comment, rating])
     .then(([data]) => data)
     .catch((err) => {
         console.log(err);
@@ -30,7 +30,7 @@ async function deleteComment(comment) {
         pid
     } = comment;
 
-    database.query("DELETE FROM Comment WHERE event_id = ? AND pid = ?", [eid, pid])
+    return database.query("DELETE FROM Comment WHERE event_id = ? AND pid = ?", [eid, pid])
     .then(([result]) => result)
     .catch((err) => {
         console.log(err);
@@ -38,9 +38,9 @@ async function deleteComment(comment) {
     })
 }
 
-async function listComments(eid) {
-    database.query("SELECT * FROM Comment WHERE event_id = ?", [eid])
-    .then(([data]) => data.map(row => ({...row})))
+async function listComments(event_id) {
+    return database.query("SELECT * FROM Comment WHERE event_id = ?", [event_id])
+    .then(([data]) => data.map(row => row))
     .catch((err) => {
         console.log(err);
         throw err;
