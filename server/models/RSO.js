@@ -45,7 +45,7 @@ async function findRSOByAid(aid) {
 }
 
 async function findRSOsByUid(uid) {
-    return database.query("SELECT name, description FROM RSO WHERE uid = ?", [uid])
+    return database.query("SELECT rid, name, description FROM RSO WHERE uid = ?", [uid])
     .then(([data]) => data.map(RSO => RSO))
     .catch((err) => {
         console.log("Error displaying RSOs");
