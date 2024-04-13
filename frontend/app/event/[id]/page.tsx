@@ -43,7 +43,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                     `http://localhost:8000/comment/${params.id}/list`
                 );
                 setComments(response.data);
-                console.log(response.data.event_comment);
+                console.log("comments:", response.data);
             } catch (error) {
                 console.log(error);
             }

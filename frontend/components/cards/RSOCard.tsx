@@ -36,20 +36,28 @@ const RSOCard = ({ name, description, rid }: Props) => {
         try {
             if (!inRSO) {
                 // Join RSO through API endpoint
-                await axios.post(`http://localhost:8000/rso/join`, {
-                    rid: rid,
-                    pid: auth?.pid,
-                });
-                setInRSO(true);
-            } else {
-                // Leave RSO through API endpoint
-                await axios.delete(`http://localhost:8000/rso/leave`, {
-                    data: {
+                const response = await axios.post(
+                    `http://localhost:8000/rso/join`,
+                    {
                         rid: rid,
                         pid: auth?.pid,
-                    },
-                });
+                    }
+                );
+                setInRSO(true);
+                console.log(response);
+            } else {
+                // Leave RSO through API endpoint
+                const response = await axios.delete(
+                    `http://localhost:8000/rso/leave`,
+                    {
+                        data: {
+                            rid: rid,
+                            pid: auth?.pid,
+                        },
+                    }
+                );
                 setInRSO(false);
+                console.log(response);
             }
         } catch (error) {
             console.log(error);

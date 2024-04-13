@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 const FormSchema = z.object({
     name: z.string().min(3).max(30),
@@ -28,7 +29,20 @@ const FormSchema = z.object({
     category: z.string(),
 });
 
+interface UserData {
+    uid: string;
+    pid: string;
+    spid: string;
+    rid: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    access: string;
+}
+
 export default function CreateEvent() {
+    const auth = useAuthUser<UserData>();
+
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -49,6 +63,8 @@ export default function CreateEvent() {
             const response = await axios.post(
                 "http://localhost:8000/events/create",
                 {
+                    uid: auth?.uid,
+                    rid: auth?.rid,
                     name: values.name,
                     description: values.description,
                     type: values.type,

@@ -58,7 +58,7 @@ export default function Page() {
                     password: values.password,
                 }
             );
-
+            console.log(response.data);
             if (
                 signIn({
                     auth: {
@@ -69,7 +69,7 @@ export default function Page() {
                         uid: response.data.uid,
                         pid: response.data.pid,
                         spid: response.data.spid,
-                        rid: response.data.rid,
+                        rid: response.data.ridInfo,
                         username: response.data.username,
                         first_name: response.data.first_name,
                         last_name: response.data.last_name,
