@@ -19,4 +19,9 @@ export const sidebarLinks = [
         route: "/create",
         label: "Create",
     },
+    {
+        imgURL: "/assets/register.svg",
+        route: "/registerUniversity",
+        label: "Register University",
+    },
 ];

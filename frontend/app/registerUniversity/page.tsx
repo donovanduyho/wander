@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const formSchema = z
     .object({
@@ -39,8 +38,6 @@ const formSchema = z
     );
 
 export default function Page() {
-    const router = useRouter();
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -56,7 +53,7 @@ export default function Page() {
 
     const handleSubmit = async (values: z.infer<typeof formSchema>) => {
         axios
-            .post("http://localhost:8000/user/registerStudent", {
+            .post("http://localhost:8000/user/registerSA", {
                 username: values.username,
                 password: values.password,
                 first_name: values.first_name,
@@ -67,7 +64,6 @@ export default function Page() {
             })
             .then((response) => {
                 console.log(response);
-                router.push("/");
             })
             .catch((error) => {
                 console.log(error);
@@ -78,7 +74,7 @@ export default function Page() {
 
     return (
         <div className="px-8 pt-2 flex flex-col gap-4">
-            <h1 className="font-bold text-2xl">Create Account</h1>
+            <h1 className="font-bold text-2xl">Register University</h1>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(handleSubmit)}
