@@ -102,8 +102,8 @@ router.delete('/leave', async (req, res) => {
     .catch((err) => res.status(400).json({ message: "Error leaving RSO" + err}))
 })
 
-router.post('/showRSOs/:uid', (req, res) => {
-    const { uid } = req.params
+router.post('/showRSOs', (req, res) => {
+    const { uid } = req.body
     console.log(uid);
     findRSOsByUid(uid).then((data) => res.json(data))
     .catch(() => res.status(400).json({ message : "Error returning RSOs"}))
