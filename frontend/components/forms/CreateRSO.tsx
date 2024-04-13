@@ -17,30 +17,22 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 
 const FormSchema = z.object({
-    event_comment: z.string().min(3).max(50),
-    rating: z.string().min(1),
+    name: z.string().min(3).max(30),
+    description: z.string(),
 });
 
 export default function Comment() {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            event_comment: "",
-            rating: "0",
+            name: "",
+            description: "",
         },
     });
 
     const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
         try {
-            const response = await axios.post(
-                "http://localhost:8000/comment/1/post",
-                {
-                    event_comment: values.event_comment,
-                    rating: values.rating,
-                }
-            );
-
-            console.log(response);
+            const response = axios.post("http://localhost:8000/events/");
         } catch (error) {
             console.log(error);
         }
@@ -57,27 +49,11 @@ export default function Comment() {
                 >
                     <FormField
                         control={form.control}
-                        name="event_comment"
+                        name="name"
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <FormLabel>Comment</FormLabel>
-                                    <FormControl>
-                                        <Textarea {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            );
-                        }}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="rating"
-                        render={({ field }) => {
-                            return (
-                                <FormItem>
-                                    <FormLabel>Rating</FormLabel>
+                                    <FormLabel>Name</FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder=""
@@ -91,8 +67,24 @@ export default function Comment() {
                         }}
                     />
 
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <FormLabel>Description</FormLabel>
+                                    <FormControl>
+                                        <Textarea {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            );
+                        }}
+                    />
+
                     <Button type="submit" className="w-full">
-                        Submit
+                        Register
                     </Button>
                 </form>
             </Form>

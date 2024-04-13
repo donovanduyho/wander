@@ -5,6 +5,8 @@ import NextAuth from "@auth-kit/next/NextAuth";
 import { useState, useEffect } from "react";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import CreateRSO from "@/components/forms/CreateRSO";
 
 interface UserData {
     uid: string;
@@ -36,6 +38,8 @@ export default function Community() {
         <NextAuth fallbackPath="/sign-in">
             <div className="flex flex-col gap-4">
                 <h1 className="font-bold text-2xl">RSOs</h1>
+                <Button>Create a Registered Student Organization</Button>
+                <CreateRSO />
                 <RSOCard name={rso} />
             </div>
         </NextAuth>
