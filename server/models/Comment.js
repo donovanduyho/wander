@@ -16,7 +16,7 @@ async function addComment(comment) {
         event_comment,
         rating
     } = comment
-    database.query("INSERT INTO Comment (event_id, person_id, event_comment, rating, posting_time) VALUES (?,?,?,?,?) VALUES (?,?,?,?,NOW())", [event_id, person_id, event_comment, rating])
+    database.query("INSERT INTO Comment (event_id, person_id, event_comment, rating, posting_time) VALUES (?,?,?,?,NOW())", [event_id, person_id, event_comment, rating])
     .then(([data]) => data)
     .catch((err) => {
         console.log(err);
