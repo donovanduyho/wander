@@ -52,7 +52,7 @@ router.post('/createRSO', (req, res) => {
                 .then((rid) => {
                     const member = { pid, rid }
                     addRSOMember(member)
-                    .then(() => res.status(200).json({ message: "RSO successfully created"}))
+                    .then(() => res.status(200).json(rid))
                     .catch(() => res.status(400).json({ message: "Error adding member to RSO"}));
                 })
                 .catch((err) => {
@@ -89,7 +89,7 @@ router.post('/join', async (req, res) => {
             res.status(400).json({ message: "You have already joined this RSO"});
         else {
             addRSOMember(member)
-            .then(() => res.status(200).json({message: "Successfully joined RSO"}))
+            .then((rid) => res.status(200).json(rid))
             .catch(() => {
                 res.status(400).json({ message: "Something went wrong joining RSO"});
             })
@@ -103,7 +103,7 @@ router.delete('/leave', async (req, res) => {
     const { pid, rid } = req.body;
     const member = { pid, rid };
     deleteRSOMember(member)
-    .then(() => res.status(200).json({ message: "Successfully left RSO"}))
+    .then(() => res.status(200).json({rid}))
     .catch((err) => res.status(400).json({ message: "Error leaving RSO" + err}))
 })
 
