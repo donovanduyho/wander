@@ -53,6 +53,12 @@ router.post('/searchForUni', (req, res) => {
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(400).json("Error searching for uni"))
 })
+
+router.post('/:uid', (req, res) => {
+    const { uid } = req.params;
+    findUniByUid(uid).then((data) => res.status(200).json(data))
+    .catch((err) => res.status(400).json({message: "Error finding university" + uid}))
+})
     
     
 

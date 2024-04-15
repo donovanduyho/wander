@@ -21,7 +21,7 @@ async function addRSOEvent(event) {
 
 async function findAllRSOEvents(rid) {
     return database.query("SELECT * FROM Events WHERE eid IN (SELECT eid FROM RSO_Events WHERE rid = ?)", [rid])
-    .then(([data]) => data.map(row => ({ ...row, type: "RSO"})))
+    .then(([data]) => data.map(row => ({ ...row, type: "RSO Event"})))
     .catch((err) => {
         console.log('RSO Events FindAll', err);
         throw err;

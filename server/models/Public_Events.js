@@ -20,7 +20,7 @@ async function findPublicEventByAid(aid) {
 
 async function findAllPublicEvents() {
     return database.query("SELECT * FROM Events WHERE eid IN (SELECT eid FROM Public_Events)")
-    .then(([data]) => data.map(row => ({ ...row, type: 'Public'})))
+    .then(([data]) => data.map(row => ({ ...row, type: 'Public Event'})))
     .catch((err) => {
         console.log("public event: find all", err);
         throw err;
