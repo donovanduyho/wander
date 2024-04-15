@@ -12,7 +12,7 @@ interface UserData {
 const store = createStore<UserData>({
     authName: "__auth",
     authType: "cookie",
-    cookieDomain: "http://localhost:3000",
+    cookieDomain: "http://localhost:3001",
     cookieSecure: false,
 });
 

@@ -82,7 +82,6 @@ export default function Page() {
             } else {
                 console.log("Fail");
             }
-            console.log("Authenticated?:", isAuthenticated);
         } catch (error) {
             console.log(error);
         }
