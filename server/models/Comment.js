@@ -24,13 +24,8 @@ async function addComment(comment) {
     })
 }
 
-async function deleteComment(comment) {
-    const {
-        eid,
-        pid
-    } = comment;
-
-    return database.query("DELETE FROM Comment WHERE event_id = ? AND pid = ?", [eid, pid])
+async function deleteComment(cid) {
+    return database.query("DELETE FROM Comment WHERE cid = ?", [cid])
     .then(([result]) => result)
     .catch((err) => {
         console.log(err);

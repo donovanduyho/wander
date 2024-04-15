@@ -36,14 +36,11 @@ router.get("/:eid/list", (req, res) => {
     .catch(() => res.status(400).json({ message: "Error listing comments"}))
 })
 
-router.delete('/:eid/delete', (req, res) => {
-    const {eid} = req.params;
-    const {pid} = req.user;
-    const comment = {
-        eid,
-        pid
-    }
-    deleteComment(comment).then(() => res.status(200).json({ message: "comment successfully deleted"}))
+router.delete('/delete', (req, res) => {
+    const {
+        cid
+    } = req.body;
+    deleteComment(cid).then(() => res.status(200).json({ message: "comment successfully deleted"}))
     .catch(()  => res.status(400).json({ message: "Error deleting comment"}));
 })
 

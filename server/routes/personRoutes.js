@@ -15,7 +15,7 @@ router.get("/getByPid", (req, res) => {
     const {
         pid
     } = req.body;
-    findPersonByPid(pid).then((data) => res.status(200).json({ data }))
+    findPersonByPid(pid).then((data) => res.status(200).json( data ))
     .catch(() => res.status(400).json({ message : "Error finding person"}));
 });
 
@@ -23,7 +23,7 @@ router.get("/getByUsername", (req, res) => {
     const {
         username
     } = req.body;
-    findPersonByUsername(username).then((data) => res.status(200).json({ data }))
+    findPersonByUsername(username).then((data) => res.status(200).json( data ))
     .catch(() => res.status(400).json({ message : "Error finding person"}));
 })
 
@@ -31,7 +31,7 @@ router.post("/getByEmail", (req, res) => {
     const {
         email
     } = req.body;
-    findPersonByEmail(email).then((data) => res.status(200).json({ data }))
+    findPersonByEmail(email).then((data) => res.status(200).json( data ))
     .catch(() => res.status(400).json({ message : "Error finding person"}));
 })
 
