@@ -40,7 +40,7 @@ async function addPrivateEvent(event) {
 
 async function findAllPrivateEvents(uid) {
     return database.query("SELECT * FROM Events WHERE eid IN (SELECT eid FROM Private_Events WHERE uid = ?)", [uid])
-    .then(([data]) => data.map(row => ({...row, type: "Private"})))
+    .then(([data]) => data.map(row => ({...row, type: "Private Event"})))
     .catch((err) => {
         console.log('Public Events FindAll', err);
         throw err;
