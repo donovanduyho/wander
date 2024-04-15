@@ -18,6 +18,10 @@ import axios from "axios";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 
+interface Props {
+    eid: string;
+}
+
 interface UserData {
     uid: string;
     pid: string;
@@ -34,7 +38,7 @@ const FormSchema = z.object({
     rating: z.string().min(1),
 });
 
-export default function Comment() {
+export default function Comment({ eid }: Props) {
     const auth = useAuthUser<UserData>();
     const isAuthenticated = useIsAuthenticated();
 
@@ -49,14 +53,13 @@ export default function Comment() {
     const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
         try {
             const response = await axios.post(
-                "http://localhost:8000/comment/1/post",
+                `http://localhost:8000/comment/${eid}/post`,
                 {
                     pid: auth?.pid,
                     event_comment: values.event_comment,
                     rating: values.rating,
                 }
             );
-
             console.log(response);
         } catch (error) {
             console.log(error);

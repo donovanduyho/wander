@@ -78,7 +78,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                         <Button onClick={toggleCommentForm}>
                             {showCommentForm ? "Hide" : "Add a Comment"}
                         </Button>
-                        {showCommentForm && <Comment />}
+                        {showCommentForm && <Comment eid={params.id} />}
                     </div>
 
                     <div className="flex flex-col gap-2">

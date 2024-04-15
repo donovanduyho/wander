@@ -52,7 +52,18 @@ const CommentCard = ({ cid, pid, event_comment, rating }: Props) => {
         };
 
         getAuthorName();
-    });
+    }, [pid]);
+
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(
+                `http://localhost:8000/comment/delete/${cid}`
+            );
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <Card>
@@ -69,7 +80,7 @@ const CommentCard = ({ cid, pid, event_comment, rating }: Props) => {
                 {isAuthor && (
                     <div className="flex flex-row gap-2">
                         <Button>Edit</Button>
-                        <Button>Delete</Button>
+                        <Button onClick={handleDelete}>Delete</Button>
                     </div>
                 )}
             </CardFooter>
