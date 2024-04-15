@@ -12,8 +12,8 @@ const {
 
 router.post('/:eid/post', (req, res) => {
     const {eid} = req.params;
-    const {pid} = req.body;
     const {
+        pid,
         event_comment,
         rating
     } = req.body
@@ -32,7 +32,7 @@ router.post('/:eid/post', (req, res) => {
 
 router.get("/:eid/list", (req, res) => {
     const {eid} = req.params
-    listComments(eid).then((data) => res.status(200).json({ data }))
+    listComments(eid).then((data) => res.status(200).json( data ))
     .catch(() => res.status(400).json({ message: "Error listing comments"}))
 })
 
