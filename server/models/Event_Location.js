@@ -27,8 +27,9 @@ async function findLocationByAddress(address) {
 }
 
 
-async function addLocation(lname, address) {
-    const { lat, lng } = await coordinates(address);
+async function addLocation(location) {
+    const { lname, address } = location;
+    const { lat, lng } = await coordinates(address)
     return database.query("INSERT INTO Event_Location (lname, address, longitude, latitude) VALUES (?,?,?,?)", [lname, address, lng, lat])
     .then(() => findLocationByLid(lname))
     .catch(err => { console.log(err);
@@ -45,7 +46,7 @@ async function deleteLocation (lid) {
 }
 
 
-async function coordinates(address) {    
+async function coordinates(address) {   
     const coordinate = await axios.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURIComponent(address) + '&key=' + process.env.GOOGLE_API)
     .then(res => {
         if (res.status == 200 && res.data.results.length > 0) 

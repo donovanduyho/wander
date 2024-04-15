@@ -1,7 +1,7 @@
 const database = require('../database');
 
-async function findRSOMemberPidRid(pid, rid) {
-    database.query("SELECT * FROM Student_RSOs WHERE pid = ? AND rid = ?", [pid, rid])
+async function findRSOMemberPid(pid) {
+    return database.query("SELECT * FROM Student_RSOs WHERE pid = ?", [pid])
     .then(([data]) => data[0])
     .catch((err) => {
         console.log(err);
@@ -31,7 +31,11 @@ async function deleteRSOMember(member) {
 
 async function findAllUserRSOs(pid) {
     return database.query("SELECT * FROM Student_RSOs WHERE pid = ?", [pid])
-    .then(([result]) => result[0].rid)
+    .then(([result]) => {
+        if (result[0] == undefined)
+            return null
+        return result[0].rid
+    })
     .catch((err) => {
         console.log(err);
         throw err;
@@ -40,7 +44,7 @@ async function findAllUserRSOs(pid) {
 }
 
 module.exports = {
-    findRSOMemberPidRid,
+    findRSOMemberPid,
     addRSOMember,
     deleteRSOMember,
     findAllUserRSOs

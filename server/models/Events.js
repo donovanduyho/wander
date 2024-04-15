@@ -40,8 +40,9 @@ async function addEvent(event) {
     await findLocationByLname(lname)
     .then((result) => {
         if (!result)
-            addLocation(lname, address);
+            return addLocation({lname, address});
     })
+    .then(() => 'location added')
     .catch((err) => {
         console.log(err);
         throw err;
@@ -53,7 +54,6 @@ async function addEvent(event) {
             console.log(err);
             throw err;
         })
-
 }
 
 module.exports = {

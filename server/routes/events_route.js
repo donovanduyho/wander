@@ -36,13 +36,14 @@ const {
  } = require('../models/RSO');
 
  const {
-    findAllRSOEvents
+    findAllRSOEvents,
+    addRSOEvent
  } = require('../models/RSO_Events')
 
 
 // create event
 router.post('/create', (req, res) => {
-    const { pid, aid, uid } = req.body
+    const { pid, aid, uid, rid } = req.body
     const {
         name,
         description,
@@ -75,12 +76,6 @@ router.post('/create', (req, res) => {
         if (type === 'Private')
             return addPrivateEvent({ eid, aid, uid })
         if (type === 'RSO') {
-            const rid = findRSOByAid(aid)
-            .then((data) => data.rid)
-            .catch((err) => {
-                console.log(err);
-                throw err;
-            })
             return addRSOEvent({ eid, rid })
         }
     })

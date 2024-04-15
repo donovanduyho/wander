@@ -12,7 +12,11 @@ async function findRSOEventByEid(eid) {
 
 async function addRSOEvent(event) {
     const {eid, rid} = event;
-    database.query("INSERT INTO RSO_Events (eid, rid) VALUES (?, ?)", [eid, rid]);
+    database.query("INSERT INTO RSO_Events (eid, rid) VALUES (?, ?)", [eid, rid])
+    .catch((err) => {
+        console.log(err);
+        throw err;
+    });
 }
 
 async function findAllRSOEvents(rid) {
