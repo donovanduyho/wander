@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { useRouter } from "next/navigation";
 
 interface UserData {
     uid: string;
@@ -35,6 +36,7 @@ const FormSchema = z.object({
 
 export default function Comment() {
     const auth = useAuthUser<UserData>();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -53,6 +55,7 @@ export default function Comment() {
                 uid: auth?.uid,
             });
             console.log(response);
+            router.push("/community");
         } catch (error) {
             console.log(error);
         }
