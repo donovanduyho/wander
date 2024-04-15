@@ -11,7 +11,7 @@ const { findPersonByPid,
     deletePerson
 } = require('../models/Person');
 
-router.get("/getByPid", (req, res) => {
+router.post("/getByPid", (req, res) => {
     const {
         pid
     } = req.body;
