@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import EditComment from "../forms/EditComment";
 
 interface Props {
     cid: string;
@@ -33,6 +34,7 @@ const CommentCard = ({ cid, pid, event_comment, rating }: Props) => {
     const auth = useAuthUser<UserData>();
     const [isAuthor, setIsAuthor] = useState<boolean>(auth?.pid === pid);
     const [name, setName] = useState("");
+    const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
         const getAuthorName = async () => {
@@ -65,26 +67,40 @@ const CommentCard = ({ cid, pid, event_comment, rating }: Props) => {
         }
     };
 
+    const handleEdit = () => {
+        setEditMode(true); // Set edit mode to true when Edit button is clicked
+    };
+
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>{name}</CardTitle>
-                <p className="font-semibold">{rating}/5</p>
-            </CardHeader>
+        <div>
+            {editMode ? ( // Render EditComment component if edit mode is active
+                <EditComment
+                    cid={cid}
+                    pid={pid}
+                    onCancel={() => setEditMode(false)}
+                />
+            ) : (
+                <Card>
+                    <CardHeader>
+                        <CardTitle>{name}</CardTitle>
+                        <p className="font-semibold">{rating}/5</p>
+                    </CardHeader>
 
-            <CardContent>
-                <p>{event_comment}</p>
-            </CardContent>
+                    <CardContent>
+                        <p>{event_comment}</p>
+                    </CardContent>
 
-            <CardFooter>
-                {isAuthor && (
-                    <div className="flex flex-row gap-2">
-                        <Button>Edit</Button>
-                        <Button onClick={handleDelete}>Delete</Button>
-                    </div>
-                )}
-            </CardFooter>
-        </Card>
+                    <CardFooter>
+                        {isAuthor && (
+                            <div className="flex flex-row gap-2">
+                                <Button onClick={handleEdit}>Edit</Button>
+                                <Button onClick={handleDelete}>Delete</Button>
+                            </div>
+                        )}
+                    </CardFooter>
+                </Card>
+            )}
+        </div>
     );
 };
 
