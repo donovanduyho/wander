@@ -76,7 +76,7 @@ export default function Discover() {
                 />
             );
         } else {
-            return <div>Error</div>;
+            console.log("Error displaying image");
         }
     };
 
