@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import EventCard from "@/components/cards/EventCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 interface Event {
     eid: string;
@@ -37,12 +38,45 @@ export default function Discover() {
             const response2 = await axios.post(
                 "http://localhost:8000/events/allEvents",
                 {
-                    uid: response1.data,
+                    uid: uni,
                 }
             );
             setEvents(response2.data);
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const renderUniImage = () => {
+        if (uni == "1") {
+            return (
+                <Image
+                    src="/uploads/ucf.jpg"
+                    width={250}
+                    height={250}
+                    alt="UCF"
+                />
+            );
+        } else if (uni == "2") {
+            return (
+                <Image
+                    src="/uploads/uf.jpg"
+                    width={250}
+                    height={250}
+                    alt="UF"
+                />
+            );
+        } else if (uni == "3") {
+            return (
+                <Image
+                    src="/uploads/fsu.jpg"
+                    width={250}
+                    height={250}
+                    alt="FSU"
+                />
+            );
+        } else {
+            return <div>Error</div>;
         }
     };
 
@@ -58,17 +92,22 @@ export default function Discover() {
             />
             <Button onClick={handleSubmit}>Find</Button>
 
-            {events.map((event) => (
-                <EventCard
-                    key={event.eid}
-                    eid={event.eid}
-                    name={event.name}
-                    event_location={event.event_location}
-                    time={event.time}
-                    category={event.category}
-                    description={event.description}
-                />
-            ))}
+            {renderUniImage()}
+
+            {events !== null &&
+                events.length > 0 &&
+                events.map((event) => (
+                    <EventCard
+                        key={event.eid}
+                        eid={event.eid}
+                        name={event.name}
+                        event_location={event.event_location}
+                        time={event.time}
+                        category={event.category}
+                        description={event.description}
+                    />
+                ))}
+            {events !== null && events.length === 0 && <p>No events found.</p>}
         </div>
     );
 }
