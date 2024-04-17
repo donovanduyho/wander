@@ -5,7 +5,7 @@ export const sidebarLinks = [
         label: "Events",
     },
     {
-        imgURL: "/assets/discover.svg",
+        imgURL: "/assets/search.svg",
         route: "/discover",
         label: "Discover",
     },
@@ -20,12 +20,12 @@ export const sidebarLinks = [
         label: "Create",
     },
     {
-        imgURL: "/assets/register.svg",
+        imgURL: "/assets/create.svg",
         route: "/registerUniversity",
         label: "Register University",
     },
     {
-        imgURL: "/assets/register.svg",
+        imgURL: "/assets/create.svg",
         route: "/registerRSO",
         label: "Register RSO",
     },
